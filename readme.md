@@ -4,7 +4,7 @@ plot jack audio data in real-time. for fun and _"science"_...
 
 **WARNING: as this is c - _and i dont really know what im doing_ - use at your own risk!**
 
-<img src="jackplot.apng" style="background:black" title="you gotta see it live! snappy, crisp and minimal cpu usage!" />
+<img src="docu/jackplot.apng" style="background:black" title="you gotta see it live! snappy, crisp and minimal cpu usage!" />
 
 > **SORRY** about the cpu usage of above apng, should play only once!
 

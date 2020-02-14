@@ -1,24 +1,25 @@
-PROG       = jackplot
-MYCFLAGS   = `pkg-config --cflags jack gl glu glfw3`
-MYLDFLAGS  = `pkg-config --libs jack gl glu glfw3`
+APP        = jackplot
+APPDEPS    = jack gl glu glfw3
+APPCFLAGS  = `pkg-config --cflags $(APPDEPS)`
+APPLDFLAGS = `pkg-config --libs $(APPDEPS)`
 PREFIX    ?= /usr/local
 
-.PHONY: all clean install archlinux
+.PHONY: all install clean archlinux
 
-all: $(PROG)
+all: $(APP)
 
-%.o: %.c
-	$(CC) -c $(CFLAGS) $(CPPFLAGS) ${MYCFLAGS} $< -o $@
+%.o: code/%.c
+	$(CC) -c $(CFLAGS) $(CPPFLAGS) $(APPCFLAGS) $< -o $@
 
-%: %.c
-	$(CC) $(CFLAGS) $(CPPFLAGS) ${MYCFLAGS} ${MYLDFLAGS} $^ -o $@
+%: code/%.c
+	$(CC) $(CFLAGS) $(CPPFLAGS) $(APPCFLAGS) $(APPLDFLAGS) $^ -o $@
+
+install: $(APP)
+	install -Dm755 $(APP) $(DESTDIR)$(PREFIX)/bin/$(APP)
 
 clean:
-	rm -f $(PROG) *.o $(PROG).trace
-	rm -rf distro/archlinux/{pkg,src,$(PROG),*.pkg.*}
-
-install: $(PROG)
-	install -Dm755 $(PROG) $(DESTDIR)$(PREFIX)/bin/$(PROG)
+	rm -f $(APP) *.o $(APP).trace $(APP).apng
+	rm -rf distro/archlinux/{pkg,src,$(APP),*.pkg.*}
 
 archlinux:
 	cd distro/archlinux;\
