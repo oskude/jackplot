@@ -40,6 +40,24 @@ process (jack_nframes_t nframes, void *arg)
 	return 0;
 }
 
+// https://github.com/iiiypuk/glfw-examples/blob/master/fps_counter.c
+int frames = 0;
+double t, t0, fps;
+char title_string[10];
+int show_fps (GLFWwindow* window)
+{
+	t = glfwGetTime();
+	if((t - t0) > 1.0 || frames == 0)
+	{
+		fps = (double)frames / (t - t0);
+		sprintf(title_string, "FPS: %.1f", fps);
+		glfwSetWindowTitle(window, title_string);
+		t0 = t;
+		frames = 0;
+	}
+	frames++;
+}
+
 int
 main (void)
 {
@@ -72,6 +90,7 @@ main (void)
 	{
 		render();
 		glfwSwapBuffers(window);
+		show_fps(window);
 		glfwPollEvents();
 	}
 
